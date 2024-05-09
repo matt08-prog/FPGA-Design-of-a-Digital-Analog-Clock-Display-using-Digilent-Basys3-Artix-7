@@ -36,7 +36,16 @@ module quad_seven_seg (
 
  reg [2:0] next_digit = 0;
  reg A = 0, B = 0, C = 0, D = 0;
- 
+ reg [9:0] counter = 0;
+ wire enable;
+
+ always@(posedge clk)
+    begin
+        counter <= counter +1;
+    end
+
+assign enable = (counter == 0);
+
  always @(posedge clk) begin
     an3 <= 1'b1;
     an2 <= 1'b1;
@@ -51,8 +60,7 @@ module quad_seven_seg (
             C = val3[1];
             D = val3[0];
             dp <= dot3;
-            
-            next_digit <= 1;
+            if (enable == 1) next_digit <= 1;
            end
         1: begin
             an2 <= 1'b0;
@@ -63,7 +71,7 @@ module quad_seven_seg (
             D = val2[0];
             dp <= dot2;
             
-            next_digit <= 2;
+            if (enable == 1) next_digit <= 2;
            end
         2: begin
             an1 <= 1'b0;
@@ -74,7 +82,7 @@ module quad_seven_seg (
             D = val1[0];
             dp <= dot1;
             
-            next_digit <= 3;
+            if (enable == 1) next_digit <= 3;
            end
         3: begin
             an0 <= 1'b0;
@@ -85,7 +93,7 @@ module quad_seven_seg (
             D = val0[0];
             dp <= dot0;
             
-            next_digit <= 0;
+            if (enable == 1) next_digit <= 1;
            end
     endcase
 
