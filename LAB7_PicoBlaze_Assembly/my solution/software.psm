@@ -56,7 +56,7 @@ CONSTANT one             , 01 ; one
 			   
    shift_left: SL0 s5
 			   ADDCY s7, 00
-			   SL0 s6
+			   SL0 s0
 			   ADDCY s7, 00
 			   SUB s3, 01
 			   JUMP NZ, shift_left
